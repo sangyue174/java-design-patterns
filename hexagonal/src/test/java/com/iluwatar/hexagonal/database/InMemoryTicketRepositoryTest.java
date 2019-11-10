@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.hexagonal.database;
 
 import java.util.Optional;
@@ -38,23 +39,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Tests for {@link LotteryTicketRepository}
  *
  */
-public class InMemoryTicketRepositoryTest {
+class InMemoryTicketRepositoryTest {
 
   private final LotteryTicketRepository repository = new InMemoryTicketRepository();
   
   @BeforeEach
-  public void clear() {
+  void clear() {
     repository.deleteAll();
   }
   
   @Test
-  public void testCrudOperations() {
+  void testCrudOperations() {
     LotteryTicketRepository repository = new InMemoryTicketRepository();
-    assertEquals(repository.findAll().size(), 0);
+    assertTrue(repository.findAll().isEmpty());
     LotteryTicket ticket = LotteryTestUtils.createLotteryTicket();
     Optional<LotteryTicketId> id = repository.save(ticket);
     assertTrue(id.isPresent());
-    assertEquals(repository.findAll().size(), 1);
+    assertEquals(1, repository.findAll().size());
     Optional<LotteryTicket> optionalTicket = repository.findById(id.get());
     assertTrue(optionalTicket.isPresent());
   }

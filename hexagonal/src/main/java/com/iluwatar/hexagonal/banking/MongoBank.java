@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.hexagonal.banking;
 
 import com.mongodb.MongoClient;
@@ -111,7 +112,7 @@ public class MongoBank implements WireTransfers {
   @Override
   public int getFunds(String bankAccount) {
     Document search = new Document("_id", bankAccount);
-    List<Document> results = accountsCollection.find(search).limit(1).into(new ArrayList<Document>());
+    List<Document> results = accountsCollection.find(search).limit(1).into(new ArrayList<>());
     if (results.size() > 0) {
       return results.get(0).getInteger("funds");
     } else {

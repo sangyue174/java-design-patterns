@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.monostate;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -33,6 +32,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Date: 12/21/15 - 12:26 PM
@@ -47,9 +48,9 @@ public class LoadBalancerTest {
     final LoadBalancer secondBalancer = new LoadBalancer();
     firstBalancer.addServer(new Server("localhost", 8085, 6));
     // Both should have the same number of servers.
-    assertTrue(firstBalancer.getNoOfServers() == secondBalancer.getNoOfServers());
+    assertEquals(firstBalancer.getNoOfServers(), secondBalancer.getNoOfServers());
     // Both Should have the same LastServedId
-    assertTrue(firstBalancer.getLastServedId() == secondBalancer.getLastServedId());
+    assertEquals(firstBalancer.getLastServedId(), secondBalancer.getLastServedId());
   }
 
   @Test

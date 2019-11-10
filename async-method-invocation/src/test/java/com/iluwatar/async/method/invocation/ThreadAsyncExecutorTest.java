@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,32 +20,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.async.method.invocation;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Matchers;
+import static java.time.Duration.ofMillis;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-
-import static java.time.Duration.ofMillis;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTimeout;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 
 /**
  * Date: 12/6/15 - 10:49 AM
@@ -81,7 +70,8 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable, AsyncCallback)}
+   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable,
+   * AsyncCallback)}
    */
   @Test
   public void testSuccessfulTaskWithCallback() throws Exception {
@@ -103,7 +93,8 @@ public class ThreadAsyncExecutorTest {
       verify(task, times(1)).call();
 
       // ... same for the callback, we expect our object
-      final ArgumentCaptor<Optional<Exception>> optionalCaptor = ArgumentCaptor.forClass((Class) Optional.class);
+      final ArgumentCaptor<Optional<Exception>> optionalCaptor =
+          ArgumentCaptor.forClass((Class) Optional.class);
       verify(callback, times(1)).onComplete(eq(result), optionalCaptor.capture());
 
       final Optional<Exception> optionalException = optionalCaptor.getValue();
@@ -116,8 +107,8 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable)} when a task takes a while
-   * to execute
+   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable)} when a
+   * task takes a while to execute
    */
   @Test
   public void testLongRunningTaskWithoutCallback() throws Exception {
@@ -157,8 +148,8 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable, AsyncCallback)} when a task
-   * takes a while to execute
+   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable,
+   * AsyncCallback)} when a task takes a while to execute
    */
   @Test
   public void testLongRunningTaskWithCallback() throws Exception {
@@ -190,7 +181,8 @@ public class ThreadAsyncExecutorTest {
       // Our task should only execute once, but it can take a while ...
       verify(task, timeout(3000).times(1)).call();
 
-      final ArgumentCaptor<Optional<Exception>> optionalCaptor = ArgumentCaptor.forClass((Class) Optional.class);
+      final ArgumentCaptor<Optional<Exception>> optionalCaptor =
+          ArgumentCaptor.forClass((Class) Optional.class);
       verify(callback, timeout(3000).times(1)).onComplete(eq(result), optionalCaptor.capture());
 
       final Optional<Exception> optionalException = optionalCaptor.getValue();
@@ -208,8 +200,9 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable)} when a task takes a while
-   * to execute, while waiting on the result using {@link ThreadAsyncExecutor#endProcess(AsyncResult)}
+   * Test used to verify the happy path of {@link ThreadAsyncExecutor#startProcess(Callable)} when a
+   * task takes a while to execute, while waiting on the result using {@link
+   * ThreadAsyncExecutor#endProcess(AsyncResult)}
    */
   @Test
   public void testEndProcess() throws Exception {
@@ -246,7 +239,8 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the behaviour of {@link ThreadAsyncExecutor#startProcess(Callable)} when the callable is 'null'
+   * Test used to verify the behaviour of {@link ThreadAsyncExecutor#startProcess(Callable)} when
+   * the callable is 'null'
    */
   @Test
   public void testNullTask() throws Exception {
@@ -272,8 +266,8 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the behaviour of {@link ThreadAsyncExecutor#startProcess(Callable, AsyncCallback)} when the
-   * callable is 'null', but the asynchronous callback is provided
+   * Test used to verify the behaviour of {@link ThreadAsyncExecutor#startProcess(Callable,
+   * AsyncCallback)} when the callable is 'null', but the asynchronous callback is provided
    */
   @Test
   public void testNullTaskWithCallback() throws Exception {
@@ -287,7 +281,8 @@ public class ThreadAsyncExecutorTest {
       asyncResult.await(); // Prevent timing issues, and wait until the result is available
       assertTrue(asyncResult.isCompleted());
 
-      final ArgumentCaptor<Optional<Exception>> optionalCaptor = ArgumentCaptor.forClass((Class) Optional.class);
+      final ArgumentCaptor<Optional<Exception>> optionalCaptor =
+          ArgumentCaptor.forClass((Class) Optional.class);
       verify(callback, times(1)).onComplete(Matchers.isNull(), optionalCaptor.capture());
 
       final Optional<Exception> optionalException = optionalCaptor.getValue();
@@ -311,8 +306,8 @@ public class ThreadAsyncExecutorTest {
   }
 
   /**
-   * Test used to verify the behaviour of {@link ThreadAsyncExecutor#startProcess(Callable, AsyncCallback)} when both
-   * the callable and the asynchronous callback are 'null'
+   * Test used to verify the behaviour of {@link ThreadAsyncExecutor#startProcess(Callable,
+   * AsyncCallback)} when both the callable and the asynchronous callback are 'null'
    */
   @Test
   public void testNullTaskWithNullCallback() throws Exception {

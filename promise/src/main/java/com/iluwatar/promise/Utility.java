@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.promise;
 
 import org.slf4j.Logger;
@@ -32,7 +33,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -111,7 +111,7 @@ public class Utility {
    * Downloads the contents from the given urlString, and stores it in a temporary directory.
    * @return the absolute path of the file downloaded.
    */
-  public static String downloadFile(String urlString) throws MalformedURLException, IOException {
+  public static String downloadFile(String urlString) throws IOException {
     LOGGER.info("Downloading contents from url: {}", urlString);
     URL url = new URL(urlString);
     File file = File.createTempFile("promise_pattern", null);

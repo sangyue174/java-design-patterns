@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.monostate;
 
 import java.util.ArrayList;
@@ -34,33 +35,31 @@ import java.util.List;
  */
 
 public class LoadBalancer {
-  private static List<Server> servers = new ArrayList<>();
+  private static final List<Server> SERVERS = new ArrayList<>();
   private static int lastServedId;
 
   static {
     int id = 0;
-    servers.add(new Server("localhost", 8081, ++id));
-    servers.add(new Server("localhost", 8080, ++id));
-    servers.add(new Server("localhost", 8082, ++id));
-    servers.add(new Server("localhost", 8083, ++id));
-    servers.add(new Server("localhost", 8084, ++id));
+    for (int port : new int[] {8080, 8081, 8082, 8083, 8084}) {
+      SERVERS.add(new Server("localhost", port, ++id));
+    }
   }
 
   /**
    * Add new server
    */
   public final void addServer(Server server) {
-    synchronized (servers) {
-      servers.add(server);
+    synchronized (SERVERS) {
+      SERVERS.add(server);
     }
 
   }
 
   public final int getNoOfServers() {
-    return servers.size();
+    return SERVERS.size();
   }
 
-  public static int getLastServedId() {
+  public int getLastServedId() {
     return lastServedId;
   }
 
@@ -68,10 +67,10 @@ public class LoadBalancer {
    * Handle request
    */
   public synchronized void serverRequest(Request request) {
-    if (lastServedId >= servers.size()) {
+    if (lastServedId >= SERVERS.size()) {
       lastServedId = 0;
     }
-    Server server = servers.get(lastServedId++);
+    Server server = SERVERS.get(lastServedId++);
     server.serve(request);
   }
   

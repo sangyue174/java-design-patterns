@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.servicelayer.spellbook;
 
 import com.iluwatar.servicelayer.common.BaseDaoTest;
@@ -42,7 +43,7 @@ public class SpellbookDaoImplTest extends BaseDaoTest<Spellbook, SpellbookDaoImp
   }
 
   @Test
-  public void testFindByName() throws Exception {
+  public void testFindByName() {
     final SpellbookDaoImpl dao = getDao();
     final List<Spellbook> allBooks = dao.findAll();
     for (final Spellbook book : allBooks) {

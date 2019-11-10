@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.hexagonal.database;
 
 import com.iluwatar.hexagonal.domain.LotteryNumbers;
@@ -41,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Tests for Mongo based ticket repository
  */
 @Disabled
-public class MongoTicketRepositoryTest {
+class MongoTicketRepositoryTest {
 
   private static final String TEST_DB = "lotteryTestDB";
   private static final String TEST_TICKETS_COLLECTION = "lotteryTestTickets";
@@ -50,7 +51,7 @@ public class MongoTicketRepositoryTest {
   private MongoTicketRepository repository;
 
   @BeforeEach
-  public void init() {
+  void init() {
     MongoConnectionPropertiesLoader.load();
     MongoClient mongoClient = new MongoClient(System.getProperty("mongo-host"),
         Integer.parseInt(System.getProperty("mongo-port")));
@@ -61,20 +62,20 @@ public class MongoTicketRepositoryTest {
   }
 
   @Test
-  public void testSetup() {
-    assertTrue(repository.getCountersCollection().count() == 1);
-    assertTrue(repository.getTicketsCollection().count() == 0);
+  void testSetup() {
+    assertEquals(1, repository.getCountersCollection().count());
+    assertEquals(0, repository.getTicketsCollection().count());
   }
 
   @Test
-  public void testNextId() {
+  void testNextId() {
     assertEquals(1, repository.getNextId());
     assertEquals(2, repository.getNextId());
     assertEquals(3, repository.getNextId());
   }
 
   @Test
-  public void testCrudOperations() {
+  void testCrudOperations() {
     // create new lottery ticket and save it
     PlayerDetails details = new PlayerDetails("foo@bar.com", "123-123", "07001234");
     LotteryNumbers random = LotteryNumbers.createRandom();

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.throttling;
 
 import com.iluwatar.throttling.timer.Throttler;
@@ -33,18 +34,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class B2BServiceTest {
 
-  @Disabled
+  private CallsCount callsCount = new CallsCount();
+
   @Test
   public void dummyCustomerApiTest() {
-    Tenant tenant = new Tenant("testTenant", 2);
+    Tenant tenant = new Tenant("testTenant", 2, callsCount);
     // In order to assure that throttling limits will not be reset, we use an empty throttling implementation
     Throttler timer = () -> { };
-    B2BService service = new B2BService(timer);
+    B2BService service = new B2BService(timer, callsCount);
 
     for (int i = 0; i < 5; i++) {
       service.dummyCustomerApi(tenant);
     }
-    long counter = CallsCount.getCount(tenant.getName());
+    long counter = callsCount.getCount(tenant.getName());
     assertEquals(2, counter, "Counter limit must be reached");
   }
 }

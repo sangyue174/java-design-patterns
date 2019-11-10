@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.servicelayer.common;
 
 import com.iluwatar.servicelayer.hibernate.HibernateUtil;
@@ -76,7 +77,7 @@ public abstract class BaseDaoTest<E extends BaseEntity, D extends DaoBaseImpl<E>
   }
 
   @BeforeEach
-  public void setUp() throws Exception {
+  public void setUp() {
     for (int i = 0; i < INITIAL_COUNT; i++) {
       final String className = dao.persistentClass.getSimpleName();
       final String entityName = String.format("%s%d", className, ID_GENERATOR.incrementAndGet());
@@ -85,7 +86,7 @@ public abstract class BaseDaoTest<E extends BaseEntity, D extends DaoBaseImpl<E>
   }
 
   @AfterEach
-  public void tearDown() throws Exception {
+  public void tearDown() {
     HibernateUtil.dropSession();
   }
 
@@ -94,7 +95,7 @@ public abstract class BaseDaoTest<E extends BaseEntity, D extends DaoBaseImpl<E>
   }
 
   @Test
-  public void testFind() throws Exception {
+  public void testFind() {
     final List<E> all = this.dao.findAll();
     for (final E entity : all) {
       final E byId = this.dao.find(entity.getId());
@@ -104,7 +105,7 @@ public abstract class BaseDaoTest<E extends BaseEntity, D extends DaoBaseImpl<E>
   }
 
   @Test
-  public void testDelete() throws Exception {
+  public void testDelete() {
     final List<E> originalEntities = this.dao.findAll();
     this.dao.delete(originalEntities.get(1));
     this.dao.delete(originalEntities.get(2));
@@ -115,24 +116,24 @@ public abstract class BaseDaoTest<E extends BaseEntity, D extends DaoBaseImpl<E>
   }
 
   @Test
-  public void testFindAll() throws Exception {
+  public void testFindAll() {
     final List<E> all = this.dao.findAll();
     assertNotNull(all);
     assertEquals(INITIAL_COUNT, all.size());
   }
 
   @Test
-  public void testSetId() throws Exception {
+  public void testSetId() {
     final E entity = this.factory.apply("name");
     assertNull(entity.getId());
 
-    final Long expectedId = Long.valueOf(1);
+    final Long expectedId = 1L;
     entity.setId(expectedId);
     assertEquals(expectedId, entity.getId());
   }
 
   @Test
-  public void testSetName() throws Exception {
+  public void testSetName() {
     final E entity = this.factory.apply("name");
     assertEquals("name", entity.getName());
     assertEquals("name", entity.toString());

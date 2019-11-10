@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.promise;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -76,12 +77,8 @@ public class PromiseTest {
   private void testWaitingForeverForPromiseToBeFulfilled() 
       throws InterruptedException, TimeoutException {
     Promise<Integer> promise = new Promise<>();
-    promise.fulfillInAsync(new Callable<Integer>() {
-
-      @Override
-      public Integer call() throws Exception {
-        throw new RuntimeException("Barf!");
-      }
+    promise.fulfillInAsync(() -> {
+      throw new RuntimeException("Barf!");
     }, executor);
     
     try {
@@ -104,12 +101,8 @@ public class PromiseTest {
   private void testWaitingSomeTimeForPromiseToBeFulfilled() 
       throws InterruptedException, TimeoutException {
     Promise<Integer> promise = new Promise<>();
-    promise.fulfillInAsync(new Callable<Integer>() {
-
-      @Override
-      public Integer call() throws Exception {
-        throw new RuntimeException("Barf!");
-      }
+    promise.fulfillInAsync(() -> {
+      throw new RuntimeException("Barf!");
     }, executor);
     
     try {
@@ -150,12 +143,8 @@ public class PromiseTest {
       throws InterruptedException, ExecutionException, TimeoutException {
     Promise<Void> dependentPromise = promise
         .fulfillInAsync(new NumberCrunchingTask(), executor)
-        .thenAccept(new Consumer<Integer>() {
-
-          @Override
-          public void accept(Integer value) {
-            throw new RuntimeException("Barf!");
-          }
+        .thenAccept(value -> {
+          throw new RuntimeException("Barf!");
         });
 
     try {
@@ -198,12 +187,8 @@ public class PromiseTest {
       throws InterruptedException, ExecutionException, TimeoutException {
     Promise<String> dependentPromise = promise
         .fulfillInAsync(new NumberCrunchingTask(), executor)
-        .thenApply(new Function<Integer, String>() {
-
-          @Override
-          public String apply(Integer value) {
-            throw new RuntimeException("Barf!");
-          }
+        .thenApply(value -> {
+          throw new RuntimeException("Barf!");
         });
 
     try {

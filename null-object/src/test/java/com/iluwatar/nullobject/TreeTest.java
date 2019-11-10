@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.nullobject;
 
 import ch.qos.logback.classic.Logger;
@@ -110,7 +111,7 @@ public class TreeTest {
   }
 
   @Test
-  public void testGetLeft() throws Exception {
+  public void testGetLeft() {
     final Node level1 = TREE_ROOT.getLeft();
     assertNotNull(level1);
     assertEquals("level1_a", level1.getName());
@@ -130,7 +131,7 @@ public class TreeTest {
   }
 
   @Test
-  public void testGetRight() throws Exception {
+  public void testGetRight() {
     final Node level1 = TREE_ROOT.getRight();
     assertNotNull(level1);
     assertEquals("level1_b", level1.getName());

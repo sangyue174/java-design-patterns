@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.intercepting.filter;
 
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ import static org.mockito.Mockito.when;
 public class FilterManagerTest {
 
   @Test
-  public void testFilterRequest() throws Exception {
+  public void testFilterRequest() {
     final Target target = mock(Target.class);
     final FilterManager filterManager = new FilterManager();
     assertEquals("RUNNING...", filterManager.filterRequest(mock(Order.class)));
@@ -48,7 +49,7 @@ public class FilterManagerTest {
   }
 
   @Test
-  public void testAddFilter() throws Exception {
+  public void testAddFilter() {
     final Target target = mock(Target.class);
     final FilterManager filterManager = new FilterManager();
 

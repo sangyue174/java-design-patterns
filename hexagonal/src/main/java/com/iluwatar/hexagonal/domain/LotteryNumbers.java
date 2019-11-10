@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.hexagonal.domain;
 
-import java.util.ArrayList;
+import com.google.common.base.Joiner;
+
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.PrimitiveIterator;
 import java.util.Random;
 import java.util.Set;
@@ -85,16 +86,7 @@ public class LotteryNumbers {
    * @return numbers as comma separated string
    */
   public String getNumbersAsString() {
-    List<Integer> list = new ArrayList<>();
-    list.addAll(numbers);
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < NUM_NUMBERS; i++) {
-      builder.append(list.get(i));
-      if (i < NUM_NUMBERS - 1) {
-        builder.append(",");
-      }
-    }
-    return builder.toString();
+    return Joiner.on(',').join(numbers);
   }
   
   /**
@@ -105,9 +97,7 @@ public class LotteryNumbers {
     RandomNumberGenerator generator = new RandomNumberGenerator(MIN_NUMBER, MAX_NUMBER);
     while (numbers.size() < NUM_NUMBERS) {
       int num = generator.nextInt();
-      if (!numbers.contains(num)) {
-        numbers.add(num);
-      }
+      numbers.add(num);
     }
   }
 
@@ -171,5 +161,5 @@ public class LotteryNumbers {
       return false;
     }
     return true;
-  }  
+  }
 }

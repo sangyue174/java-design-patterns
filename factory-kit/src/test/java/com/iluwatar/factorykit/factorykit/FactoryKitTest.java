@@ -1,6 +1,6 @@
-  /**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.factorykit.factorykit;
 
 import com.iluwatar.factorykit.Axe;
@@ -83,7 +84,7 @@ public class FactoryKitTest {
    * @param weapon weapon object which is to be verified
    * @param clazz  expected class of the weapon
    */
-  private void verifyWeapon(Weapon weapon, Class clazz) {
+  private void verifyWeapon(Weapon weapon, Class<?> clazz) {
     assertTrue(clazz.isInstance(weapon), "Weapon must be an object of: " + clazz.getName());
   }
 }

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,19 +156,15 @@ public class App {
    * This is an async method and does not wait until the file is downloaded.
    */
   private Promise<String> download(String urlString) {
-    Promise<String> downloadPromise = new Promise<String>()
+    return new Promise<String>()
         .fulfillInAsync(
-            () -> {
-              return Utility.downloadFile(urlString);
-            }, executor)
+            () -> Utility.downloadFile(urlString), executor)
         .onError(
             throwable -> {
               throwable.printStackTrace();
               taskCompleted();
             }
         );
-
-    return downloadPromise;
   }
 
   private void stop() throws InterruptedException {

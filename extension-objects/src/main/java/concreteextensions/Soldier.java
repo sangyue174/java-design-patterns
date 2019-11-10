@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package concreteextensions;
 
 import abstractextensions.SoldierExtension;
@@ -31,6 +32,7 @@ import units.SoldierUnit;
  * Class defining Soldier
  */
 public class Soldier implements SoldierExtension {
+  private static final Logger LOGGER = LoggerFactory.getLogger(Soldier.class);
 
   private SoldierUnit unit;
 
@@ -38,10 +40,8 @@ public class Soldier implements SoldierExtension {
     this.unit = soldierUnit;
   }
 
-  final Logger logger = LoggerFactory.getLogger(Soldier.class);
-
   @Override
   public void soldierReady() {
-    logger.info("[Solider] " + unit.getName() + "  is ready!");
+    LOGGER.info("[Solider] " + unit.getName() + "  is ready!");
   }
 }

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.cqrs;
 
 import java.math.BigInteger;
@@ -96,7 +97,7 @@ public class IntegrationTest {
   @Test
   public void testGetAuthorBooks() {
     List<Book> books = queryService.getAuthorBooks("username1");
-    assertTrue(books.size() == 2);
+    assertEquals(2, books.size());
     assertTrue(books.contains(new Book("title1", 10)));
     assertTrue(books.contains(new Book("new_title2", 30)));
   }

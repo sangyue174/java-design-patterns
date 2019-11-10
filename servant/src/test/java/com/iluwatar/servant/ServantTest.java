@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.servant;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.when;
 public class ServantTest {
 
   @Test
-  public void testFeed() throws Exception {
+  public void testFeed() {
     final Royalty royalty = mock(Royalty.class);
     final Servant servant = new Servant("test");
     servant.feed(royalty);
@@ -50,7 +50,7 @@ public class ServantTest {
   }
 
   @Test
-  public void testGiveWine() throws Exception {
+  public void testGiveWine() {
     final Royalty royalty = mock(Royalty.class);
     final Servant servant = new Servant("test");
     servant.giveWine(royalty);
@@ -59,7 +59,7 @@ public class ServantTest {
   }
 
   @Test
-  public void testGiveCompliments() throws Exception {
+  public void testGiveCompliments() {
     final Royalty royalty = mock(Royalty.class);
     final Servant servant = new Servant("test");
     servant.giveCompliments(royalty);
@@ -68,22 +68,16 @@ public class ServantTest {
   }
 
   @Test
-  public void testCheckIfYouWillBeHanged() throws Exception {
+  public void testCheckIfYouWillBeHanged() {
     final Royalty goodMoodRoyalty = mock(Royalty.class);
     when(goodMoodRoyalty.getMood()).thenReturn(true);
 
     final Royalty badMoodRoyalty = mock(Royalty.class);
     when(badMoodRoyalty.getMood()).thenReturn(true);
 
-    final List<Royalty> goodCompany = new ArrayList<>();
-    goodCompany.add(goodMoodRoyalty);
-    goodCompany.add(goodMoodRoyalty);
-    goodCompany.add(goodMoodRoyalty);
+    final List<Royalty> goodCompany = List.of(goodMoodRoyalty, goodMoodRoyalty, goodMoodRoyalty);
 
-    final List<Royalty> badCompany = new ArrayList<>();
-    goodCompany.add(goodMoodRoyalty);
-    goodCompany.add(goodMoodRoyalty);
-    goodCompany.add(badMoodRoyalty);
+    final List<Royalty> badCompany =  List.of(goodMoodRoyalty, goodMoodRoyalty, badMoodRoyalty);
 
     assertTrue(new Servant("test").checkIfYouWillBeHanged(goodCompany));
     assertTrue(new Servant("test").checkIfYouWillBeHanged(badCompany));

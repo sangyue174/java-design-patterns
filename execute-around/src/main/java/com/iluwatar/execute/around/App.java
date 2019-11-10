@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,9 +20,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.execute.around;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -42,14 +42,11 @@ public class App {
    */
   public static void main(String[] args) throws IOException {
 
-    new SimpleFileWriter("testfile.txt", new FileWriterAction() {
-
-      @Override
-      public void writeFile(FileWriter writer) throws IOException {
-        writer.write("Hello");
-        writer.append(" ");
-        writer.append("there!");
-      }
-    });
+    FileWriterAction writeHello = writer -> {
+      writer.write("Hello");
+      writer.append(" ");
+      writer.append("there!");
+    };
+    new SimpleFileWriter("testfile.txt", writeHello);
   }
 }

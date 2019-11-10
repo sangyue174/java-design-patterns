@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.object.pool;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static java.time.Duration.ofMillis;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTimeout;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Date: 12/27/15 - 1:05 AM
@@ -49,23 +45,23 @@ public class OliphauntPoolTest {
   public void testSubsequentCheckinCheckout() {
     assertTimeout(ofMillis(5000), () -> {
       final OliphauntPool pool = new OliphauntPool();
-      assertEquals(pool.toString(), "Pool available=0 inUse=0");
+      assertEquals("Pool available=0 inUse=0", pool.toString());
 
       final Oliphaunt expectedOliphaunt = pool.checkOut();
-      assertEquals(pool.toString(), "Pool available=0 inUse=1");
+      assertEquals("Pool available=0 inUse=1", pool.toString());
 
       pool.checkIn(expectedOliphaunt);
-      assertEquals(pool.toString(), "Pool available=1 inUse=0");
+      assertEquals("Pool available=1 inUse=0", pool.toString());
 
       for (int i = 0; i < 100; i++) {
         final Oliphaunt oliphaunt = pool.checkOut();
-        assertEquals(pool.toString(), "Pool available=0 inUse=1");
+        assertEquals("Pool available=0 inUse=1", pool.toString());
         assertSame(expectedOliphaunt, oliphaunt);
         assertEquals(expectedOliphaunt.getId(), oliphaunt.getId());
         assertEquals(expectedOliphaunt.toString(), oliphaunt.toString());
 
         pool.checkIn(oliphaunt);
-        assertEquals(pool.toString(), "Pool available=1 inUse=0");
+        assertEquals("Pool available=1 inUse=0", pool.toString());
       }
     });
   }
@@ -114,7 +110,7 @@ public class OliphauntPoolTest {
 
       // The order of the returned instances is not determined, so just put them in a list
       // and verify if both expected instances are in there.
-      final List<Oliphaunt> oliphaunts = Arrays.asList(pool.checkOut(), pool.checkOut());
+      final List<Oliphaunt> oliphaunts = List.of(pool.checkOut(), pool.checkOut());
       assertEquals(pool.toString(), "Pool available=0 inUse=2");
       assertTrue(oliphaunts.contains(firstOliphaunt));
       assertTrue(oliphaunts.contains(secondOliphaunt));

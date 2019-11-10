@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.ambassador;
+
+import static java.lang.Thread.sleep;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static java.lang.Thread.sleep;
-
 /**
- *
  * ServiceAmbassador provides an interface for a ({@link Client}) to access ({@link RemoteService}).
  * The interface adds logging, latency testing and usage of the service in a safe way that will not
  * add stress to the remote service when connectivity issues occur.
- *
  */
 public class ServiceAmbassador implements RemoteServiceInterface {
 
@@ -40,7 +39,8 @@ public class ServiceAmbassador implements RemoteServiceInterface {
   private static final int RETRIES = 3;
   private static final int DELAY_MS = 3000;
 
-  ServiceAmbassador() {}
+  ServiceAmbassador() {
+  }
 
   @Override
   public long doRemoteFunction(int value) {
@@ -59,15 +59,15 @@ public class ServiceAmbassador implements RemoteServiceInterface {
   private long safeCall(int value) {
 
     int retries = 0;
-    long result = -1;
+    long result = FAILURE;
 
     for (int i = 0; i < RETRIES; i++) {
 
       if (retries >= RETRIES) {
-        return -1;
+        return FAILURE;
       }
 
-      if ((result = checkLatency(value)) == -1) {
+      if ((result = checkLatency(value)) == FAILURE) {
         LOGGER.info("Failed to reach remote: (" + (i + 1) + ")");
         retries++;
         try {

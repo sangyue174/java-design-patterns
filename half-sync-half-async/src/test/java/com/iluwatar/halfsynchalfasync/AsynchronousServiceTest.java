@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.halfsynchalfasync;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
@@ -44,11 +46,17 @@ import static org.mockito.Mockito.when;
  * @author Jeroen Meulemeester
  */
 public class AsynchronousServiceTest {
+  private AsynchronousService service;
+  private AsyncTask<Object> task;
+
+  @BeforeEach
+  public void setUp() {
+    service = new AsynchronousService(new LinkedBlockingQueue<>());
+    task = mock(AsyncTask.class);
+  }
 
   @Test
   public void testPerfectExecution() throws Exception {
-    final AsynchronousService service = new AsynchronousService(new LinkedBlockingQueue<>());
-    final AsyncTask<Object> task = mock(AsyncTask.class);
     final Object result = new Object();
     when(task.call()).thenReturn(result);
     service.execute(task);
@@ -65,8 +73,6 @@ public class AsynchronousServiceTest {
 
   @Test
   public void testCallException() throws Exception {
-    final AsynchronousService service = new AsynchronousService(new LinkedBlockingQueue<>());
-    final AsyncTask<Object> task = mock(AsyncTask.class);
     final IOException exception = new IOException();
     when(task.call()).thenThrow(exception);
     service.execute(task);
@@ -82,9 +88,7 @@ public class AsynchronousServiceTest {
   }
 
   @Test
-  public void testPreCallException() throws Exception {
-    final AsynchronousService service = new AsynchronousService(new LinkedBlockingQueue<>());
-    final AsyncTask<Object> task = mock(AsyncTask.class);
+  public void testPreCallException() {
     final IllegalStateException exception = new IllegalStateException();
     doThrow(exception).when(task).onPreCall();
     service.execute(task);

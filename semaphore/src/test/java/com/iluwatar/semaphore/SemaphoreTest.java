@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.iluwatar.semaphore;
 
 import org.junit.jupiter.api.Test;
@@ -36,12 +37,12 @@ public class SemaphoreTest {
   public void acquireReleaseTest() {
     Semaphore sphore = new Semaphore(3);
 
-    assertEquals(sphore.getAvailableLicenses(), 3);
+    assertEquals(3, sphore.getAvailableLicenses());
 
     for (int i = 2; i >= 0; i--) {
       try {
         sphore.acquire();
-        assertEquals(sphore.getAvailableLicenses(), i);
+        assertEquals(i, sphore.getAvailableLicenses());
       } catch (InterruptedException e) {
         fail(e.toString());
       }
@@ -49,10 +50,10 @@ public class SemaphoreTest {
   
     for (int i = 1; i <= 3; i++) {
       sphore.release();
-      assertEquals(sphore.getAvailableLicenses(), i);
+      assertEquals(i, sphore.getAvailableLicenses());
     }
 
     sphore.release();
-    assertEquals(sphore.getAvailableLicenses(), 3);
+    assertEquals(3, sphore.getAvailableLicenses());
   }
 }

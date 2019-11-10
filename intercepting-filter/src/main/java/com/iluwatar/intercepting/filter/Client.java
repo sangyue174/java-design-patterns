@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.intercepting.filter;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+package com.iluwatar.intercepting.filter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,6 +31,9 @@ import javax.swing.JRootPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 /**
  * The Client class is responsible for handling the input and running them through filters inside the
@@ -60,7 +61,7 @@ public class Client extends JFrame { // NOSONAR
    */
   public Client() {
     super("Client System");
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     setSize(300, 300);
     jl = new JLabel("RUNNING...");
     jtFields = new JTextField[3];

@@ -1,6 +1,6 @@
-/**
+/*
  * The MIT License
- * Copyright (c) 2014-2016 Ilkka Seppälä
+ * Copyright © 2014-2019 Ilkka Seppälä
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -88,13 +88,7 @@ public class CustomerTest {
 
   @Test
   public void testToString() {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append("Customer{id=")
-            .append("" + customer.getId())
-            .append(", firstName='")
-            .append(customer.getFirstName())
-            .append("\', lastName='")
-            .append(customer.getLastName() + "\'}");
-    assertEquals(buffer.toString(), customer.toString());
+    assertEquals(String.format("Customer{id=%s, firstName='%s', lastName='%s'}",
+        customer.getId(), customer.getFirstName(), customer.getLastName()), customer.toString());
   }
 }
